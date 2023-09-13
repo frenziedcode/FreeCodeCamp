@@ -1,7 +1,8 @@
 import re
 
-def arithmetic_arranger(problems, solve = True) :
+def arithmetic_arranger(problems, solve = False) :
 
+    # Limited problems
     if len(problems) > 5:
         return "Error: Too many problems."
 
@@ -19,8 +20,13 @@ def arithmetic_arranger(problems, solve = True) :
         symbol = operands[1]
         num2 = operands[2]
 
-        if ( (symbol != '+') and (symbol != '-') ) :
-            return "Error: Operator must be '+' or '-'."
+        # Is digit
+        if (re.search("[^\s0-9.+-]", problem)):
+            # Not accepted operators ('/' and '*')
+            if(re.search("[/]", problem) or re.search("[*]", problem)):
+                return "Error: Operator must be '+' or '-'."
+            return "Error: Numbers must only contain digits."
+        # Lenght size
         if (len(num1) >= 5 or len(num2) >= 5):
             return "Error: Numbers cannot be more than four digits."
 
@@ -28,7 +34,7 @@ def arithmetic_arranger(problems, solve = True) :
         if (symbol == '+'):
             result_line = str(int(num1) + int(num2))
         elif (symbol == '-'):
-            result_line = str(int(num1) + int(num2))
+            result_line = str(int(num1) - int(num2))
         
 
         length = max(len(num1), len(num2)) + 2
@@ -45,10 +51,10 @@ def arithmetic_arranger(problems, solve = True) :
             lines += separator_line + '    '
             sumx += res + '    '
         else:
-            first += top_line + '    '
-            second += bottom_line + '    '
-            lines += separator_line + '    '
-            sumx += res + '    '
+            first += top_line 
+            second += bottom_line
+            lines += separator_line
+            sumx += res
 
     if solve:
         string = first + '\n' + second + '\n' + lines + '\n' + sumx
@@ -57,11 +63,3 @@ def arithmetic_arranger(problems, solve = True) :
 
 
     return string
-
-
-'''
-#Call Function
-resultado = arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
-print("\n")
-print(resultado)
-'''
