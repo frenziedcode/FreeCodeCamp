@@ -1,40 +1,67 @@
 import re
 
-def arithmetic_arranger(problems) :
+def arithmetic_arranger(problems, solve = True) :
 
-    linha1 = ""
-    linha2 = ""
-    linha2a = ""
-    linha3 = ""
-    linha4 = ""
+    if len(problems) > 5:
+        return "Error: Too many problems."
 
-    for calc in problems :
-        str_calc = str(calc)
-        tempNum = re.findall(r'\d+', calc)
-        symbol = re.findall(r'[-+*/]', calc)
+    first = ""
+    second = ""
+    lines = ""
+    sumx = ""
 
-        intNum0 = int(tempNum[0])
-        intNum1 = int(tempNum[1])
+    for problem in problems :
+        operands = problem.split()
+        if len(operands) != 3:
+            return "Erro: Cada problema deve conter dois operandos e um operador."
 
-        if symbol == ['+']:
-            symbol = "+"
-            result = intNum0 + intNum1
-        elif symbol == ['-']:
-            symbol = "-"
-            result = intNum0 - intNum1
+        num1 = operands[0]
+        symbol = operands[1]
+        num2 = operands[2]
+
+        if ( (symbol != '+') and (symbol != '-') ) :
+            return "Error: Operator must be '+' or '-'."
+        if (len(num1) >= 5 or len(num2) >= 5):
+            return "Error: Numbers cannot be more than four digits."
+
+        result_line = ""
+        if (symbol == '+'):
+            result_line = str(int(num1) + int(num2))
+        elif (symbol == '-'):
+            result_line = str(int(num1) + int(num2))
+        
+
+        length = max(len(num1), len(num2)) + 2
+        top_line = num1.rjust(length)
+        bottom_line = symbol + str(num2.rjust(length - 1))
+        separator_line = "" 
+        res = str(result_line).rjust(length)
+        for line in range(length):
+            separator_line += '-'
+
+        if problem != problems[-1]:
+            first += top_line + '    '
+            second += bottom_line + '    '
+            lines += separator_line + '    '
+            sumx += res + '    '
         else:
-            print("Error: Operator must be '+' or '-'")
-            exit()
+            first += top_line + '    '
+            second += bottom_line + '    '
+            lines += separator_line + '    '
+            sumx += res + '    '
 
-        linha1 += f" {intNum0 : >5} "
-        linha2 += f" {symbol : <4}"
-        linha2a += f" {intNum1 : >3}"
-        linha3 += "----     "
-        linha4 += f" {result  : >2}   "
+    if solve:
+        string = first + '\n' + second + '\n' + lines + '\n' + sumx
+    else:
+        string = first + '\n' + second + '\n' +  lines
 
-    print(linha1)
 
+    return string
+
+
+'''
 #Call Function
-arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
-
-
+resultado = arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
+print("\n")
+print(resultado)
+'''
