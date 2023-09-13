@@ -1,3 +1,3 @@
-# FreeCodeCamp
+# Scientific Computing with Python
 
-I learned how to write programs and communicate our intentions to the Central Processing Unit using conditional execution, functions, and iterations. I have learned how to create and use data structures in the Main Memory.
+In the Scientific Computing with Python Certification, I was able to practise the fundamentals of Python, such as variables, loops, conditionals and functions. As well as complex data structures, networks, relational databases and data visualisation.
