@@ -1,4 +1,3 @@
-Calculadora de Tempo
 Você estará trabalhando neste projeto com nosso código inicial Replit.
 
 Comece importando o projeto no Replit.
@@ -43,3 +42,4 @@ Testes
 The unit tests for this project are in test_module.py. We imported the tests from test_module.py to main.py for your convenience. The tests will run automatically whenever you hit the "run" button.
 
 Enviando
+Copie o URL do seu projeto e envie-o para o freeCodeCamp.
