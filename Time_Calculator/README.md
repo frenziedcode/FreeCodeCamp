@@ -1,20 +1,22 @@
-Você estará trabalhando neste projeto com nosso código inicial Replit.
+Time Calculator
+You will be working on this project with our Replit starter code.
 
-Comece importando o projeto no Replit.
-Em seguida, você verá uma janela .replit.
-Select Use run command and click the Done button.
+Start by importing the project on Replit.
+Next, you will see a `.replit` window.
+Select `Use run command` and click the `Done` button.
+
 Write a function named add_time that takes in two required parameters and one optional parameter:
 
-um horário de início no formato de relógio de 12 horas (terminando em AM ou PM)
-um tempo de duração que indica o número de horas e minutos
-(opcional) um dia de início da semana, sem distinção entre maiúsculas e minúsculas
-A função deve adicionar o tempo de duração ao horário de início e retornar o resultado.
+- A start time in the 12-hour clock format (ending in AM or PM)
+- A duration time that indicates the number of hours and minutes
+(optional) a starting day of the week, case insensitive
+- The function should add the duration time to the start time and return the result.
 
 If the result will be the next day, it should show (next day) after the time. If the result will be more than one day later, it should show (n days later) after the time, where "n" is the number of days later.
 
-Se a função receber o parâmetro opcional do dia inicial da semana, a saída deve exibir o dia da semana do resultado. O dia da semana na saída deve aparecer após o horário e antes do número de dias depois.
+If the function is given the optional starting day of the week parameter, then the output should display the day of the week of the result. The day of the week in the output should appear after the time and before the number of days later.
 
-Abaixo estão alguns exemplos de diferentes casos com os quais a função deve lidar. Preste muita atenção ao espaçamento e à pontuação dos resultados.
+Below are some examples of different cases the function should handle. Pay close attention to the spacing and punctuation of the results.
 
 add_time("3:00 PM", "3:10")
 # Returns: 6:10 PM
@@ -33,13 +35,13 @@ add_time("11:43 PM", "24:20", "tueSday")
 
 add_time("6:30 PM", "205:12")
 # Returns: 7:42 AM (9 days later)
-Não importe nenhuma biblioteca Python. Suponha que os horários de início sejam horários válidos. Os minutos no tempo de duração serão um número inteiro menor que 60, mas a hora pode ser qualquer número inteiro.
+Do not import any Python libraries. Assume that the start times are valid times. The minutes in the duration time will be a whole number less than 60, but the hour can be any whole number.
 
-Desenvolvimento
+Development
 Write your code in time_calculator.py. For development, you can use main.py to test your time_calculator() function. Click the "run" button and main.py will run.
 
-Testes
+Testing
 The unit tests for this project are in test_module.py. We imported the tests from test_module.py to main.py for your convenience. The tests will run automatically whenever you hit the "run" button.
 
-Enviando
-Copie o URL do seu projeto e envie-o para o freeCodeCamp.
+Submitting
+Copy your project's URL and submit it to freeCodeCamp.
