@@ -1,99 +1,87 @@
+def get_days_later(days):
 
-def add_time(start, duration, week = ""):
+    if days == 1:
+        return "(next day)"
+    elif days > 1:
+        return f"({days} days later)"
+    return ""
 
-    # start, duration == str
-    days_later = 0
-    hours, mins = start.split(":")
-    mins, period = mins.split(" ")
-    durationHour, durationMin = duration.split(":")
 
-    # Conversão de str; para int;
-    hours = int(hours)
-    mins = int(mins)
-    durationHour = int(durationHour)
-    durationMin = int(durationMin)
+def add_time(start_time, end_time, day=False):
+    
 
-    week_names = [
-    "monday",
-    "tueday",
-    "Wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday"
+    HOURS_IN_ONE_DAY = 24
+    HOURS_IN_HALF_DAY = 12
+    WEEK_DAYS = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
     ]
 
-    #convMin_in_Hours = 0
-    weekDay = ""
 
-    if ( (hours + durationHour) < 12):
-        mins = mins + durationMin
-        hours = hours + durationHour
+    days_later = 0
+    hours, mins = start_time.split(":")
+    mins, period = mins.split(" ")
+    end_time_hrs, end_time_mins = end_time.split(":")
 
-        return str(hours) + ":" + str(mins) + " " +  period
+    
+    hours = int(hours)  # start time  hours
+    mins = int(mins)  # start time  minutes
+    end_time_hrs = int(end_time_hrs)  # end time hours
+    end_time_mins = int(end_time_mins)  # end time minutes
+    period = period.strip().lower()  # AM or PM
 
-    elif ( (hours + durationHour) > 12 ):
-        mins = mins + durationMin
-        tempMins = mins
-        if (period == "PM"):
-            period = "AM"
-        elif (period == "AM"):
-            period = "PM"
+    total_mins = mins + end_time_mins
+    total_hours = hours + end_time_hrs
 
-        if (mins > 60):
-            plusHours = int(mins / 60)
-            if (plusHours > 1):
-                mins = mins - (plusHours + 60)
+    if total_mins >= 60:
+        total_hours += int(total_mins / 60)
+        total_mins = int(total_mins % 60)
+
+    if end_time_hrs or end_time_mins:
+        # If `PM`, flip period to `AM` if hours over 12
+        if period == "pm" and total_hours > HOURS_IN_HALF_DAY:
+            # if hours over 24hr then add  days
+            if total_hours % HOURS_IN_ONE_DAY >= 1.0:
+                days_later += 1
+
+        if total_hours >= HOURS_IN_HALF_DAY:
+            hours_left = total_hours / HOURS_IN_ONE_DAY
+            days_later += int(hours_left)
+
+            # e.g: 54hr / 24 = 2.25 days <-- append 2 days
+            # e.g.: 36hr / 24 = 1.5 days <-- append 1 days
+
+        temp_hours = total_hours
+        while True:
+            # Constantly reverse period until
+            # total_hours are less than half a day
+            if temp_hours < HOURS_IN_HALF_DAY:
+                break
+            if period == "am":
+                period = "pm"
             else:
-                mins = mins - 60
+                period = "am"
+            temp_hours -= HOURS_IN_HALF_DAY
 
-            if( len(str(mins) ) < 2):
-                mins = '0' + str(mins)
-            hours = hours + durationHour + plusHours
-            hours = hours - 12
-            
-        if (hours + durationHour) > 24 :
-                hours = hours + 12
-                days_later_num = (hours + durationHour) / 24 
-                days_later = f"({int(days_later_num)} days later)"
-                tempHours = hours
+    remaining_hours = int(total_hours % HOURS_IN_HALF_DAY) or hours + 1
+    remaining_mins = int(total_mins % 60)
 
-                hours =  int(durationHour / 24)
-                hours = durationHour - (hours * 24)
-                hours = hours + tempHours - 24
+    # FORMAT RESULTS
+    results = f"{remaining_hours}:{remaining_mins:02} {period.upper()}"
+    if day:
+        day = day.strip().lower()
+        selected_day = int((WEEK_DAYS.index(day) + days_later) % 7)
+        current_day = WEEK_DAYS[selected_day]
+        results += f", {current_day.title()} {get_days_later(days_later)}"
 
-                return str(hours) + ':' + str(mins) + ' ' + period + ' ' + str(days_later)
+    else:  
+        results = " ".join((results, get_days_later(days_later)))
 
+    return results.strip()
 
-        if ( week != ""):
-            if week.lower() in week_names:
-                weekDay =  week_names[week_names.index(week.lower())].capitalize()
-                return str(hours) + ":" + str(tempMins) + " " + period + " " +  weekDay
-           
-        else:
-            return str(hours) + ":" + str(mins) + " " + period
-
-    '''
-    elif ( (hours < 12) and (hours + durationHour) > 12):
-        if (period == "PM"):
-            period = "AM"
-        elif ( period == "AM"):
-            period = "PM"
-
-        mins = mins + durationMin
-
-        if (mins > 60):
-            convMin_in_Hours = int(mins / 60)
-            mins = mins - 60
-            if (len(str(mins)) < 2):
-                mins = '0' + str(mins) 
-            hours = (hours + durationHour) - 12
-
-        hours = hours + convMin_in_Hours
-
-    '''
-
-    return 0;
-
-# Call Function
-print( add_time("8:16 PM", "466:02")  )
+#print(add_time("11:43 PM", "24:20", "tueSday"))
