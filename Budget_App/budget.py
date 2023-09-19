@@ -15,7 +15,7 @@ def create_spend_chart(categories):
     res = "Percentage spent by category\n"
     totals = getTotals(categories)
     
-    # Calcula o comprimento máximo do nome da categoria
+    # Calculate the max of weight
     max_name_length = max(len(category.name) for category in categories)
     
     for i in range(100, -1, -10):
